@@ -314,6 +314,136 @@ LEFT JOIN (
 
 
 
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+Q2
+
+1. Create User
+To create a new user in MySQL:
+
+
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+
+2. Create Role
+MySQL does not have a native concept of roles like some other database systems, but you can mimic role behavior using privileges. However, you can create a role in PostgreSQL:
+
+CREATE ROLE rolename;
+
+
+3. Grant Privileges to a Role
+To grant privileges to a role in PostgreSQL:
+
+
+GRANT privilege1, privilege2, ... ON table_name TO role_name;
+
+
+
+
+4. Revoke Privileges from a Role
+To revoke privileges from a role in PostgreSQL:
+
+REVOKE privilege1, privilege2, ... ON table_name FROM role_name;
+
+REVOKE SELECT ON sales_data FROM sales_role;
+
+
+5. Create Index
+To create an index on a table in MySQL:
+
+
+CREATE INDEX index_name ON table_name (column_name);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+Q4
+
+
+ER DIAGRAM TO RELATION DATABASE 
+
+
+
+
+CREATE TABLE EMPLOYEE (
+  Fname VARCHAR(255) NOT NULL,
+  Minit CHAR(1) NOT NULL,
+  Lname VARCHAR(255) NOT NULL,
+  Bdate DATE NOT NULL,
+  Ssn CHAR(11) NOT NULL PRIMARY KEY,
+  Sex CHAR(1) NOT NULL,
+  Salary DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE DEPARTMENT (
+  Name VARCHAR(255) NOT NULL PRIMARY KEY,
+  Number_of_employees INT NOT NULL
+);
+
+CREATE TABLE LOCATIONS (
+  Name VARCHAR(255) NOT NULL PRIMARY KEY,
+  Number INT NOT NULL
+);
+
+CREATE TABLE WORKS_FOR (
+  Ssn CHAR(11) NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Start_date DATE NOT NULL,
+  PRIMARY KEY (Ssn, Name, Start_date),
+  FOREIGN KEY (Ssn) REFERENCES EMPLOYEE(Ssn),
+  FOREIGN KEY (Name) REFERENCES DEPARTMENT(Name)
+);
+
+CREATE TABLE PROJECT (
+  Name VARCHAR(255) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE SUPERVISION (
+  Supervisor Ssn CHAR(11) NOT NULL,
+  Supervisee Ssn CHAR(11) NOT NULL,
+  PRIMARY KEY (Supervisor, Supervisee),
+  FOREIGN KEY (Supervisor) REFERENCES EMPLOYEE(Ssn),
+  FOREIGN KEY (Supervisee) REFERENCES EMPLOYEE(Ssn)
+);
+
+CREATE TABLE WORKS_ON (
+  Ssn CHAR(11) NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Hours INT NOT NULL,
+  PRIMARY KEY (Ssn, Name),
+  FOREIGN KEY (Ssn) REFERENCES EMPLOYEE(Ssn),
+  FOREIGN KEY (Name) REFERENCES PROJECT(Name)
+);
+
+CREATE TABLE DEPENDENT (
+  Name VARCHAR(255) NOT NULL,
+  Sex CHAR(1) NOT NULL,
+  Birth_date DATE NOT NULL,
+  Relationship VARCHAR(255) NOT NULL,
+  Ssn CHAR(11) NOT NULL,
+  PRIMARY KEY (Ssn),
+  FOREIGN KEY (Ssn) REFERENCES EMPLOYEE(Ssn)
+);
 
 
 
