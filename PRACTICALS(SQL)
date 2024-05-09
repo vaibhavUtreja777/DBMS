@@ -1,3 +1,60 @@
+
+
+-- Create the STUDENT table
+CREATE TABLE STUDENT (
+    RollNo CHAR(6) PRIMARY KEY,
+    StudentName VARCHAR(20),
+    Course VARCHAR(10),
+    DOB DATE
+);
+
+-- Create the SOCIETY table
+CREATE TABLE SOCIETY (
+    SocID CHAR(6) PRIMARY KEY,
+    SocName VARCHAR(20),
+    MentorName VARCHAR(15),
+    TotalSeats INT UNSIGNED
+);
+
+-- Create the ENROLLMENT table
+CREATE TABLE ENROLLMENT (
+    RollNo CHAR(6),
+    SID CHAR(6),
+    DateOfEnrollment DATE,
+    FOREIGN KEY (RollNo) REFERENCES STUDENT(RollNo),
+    FOREIGN KEY (SID) REFERENCES SOCIETY(SocID),
+    PRIMARY KEY (RollNo, SID)
+);
+
+
+INSERT INTO STUDENT (RollNo, StudentName, Course, DOB) VALUES
+('S10001', 'Alice', 'IT', '1999-05-15'),
+('S10002', 'Bob', 'CompEng', '2000-10-20'),
+('S10003', 'Charlie', 'SoftEng', '1998-03-25'),
+('S10004', 'David', 'NetEng', '2001-08-12');
+
+
+INSERT INTO SOCIETY (SocID, SocName, MentorName, TotalSeats) VALUES
+('C001', 'Coding Club', 'John Doe', 30),
+('M001', 'Music Society', 'Jane Smith', 25),
+('D001', 'Dance Team', 'Alex Johnson', 20),
+('A001', 'Athletics Team', 'William Martinez', 40);
+
+
+
+
+INSERT INTO ENROLLMENT (RollNo, SID, DateOfEnrollment) VALUES 
+('S10001', 'C001', '2024-01-10'), 
+('S10002', 'M001', '2024-02-15'), 
+('S10003', 'D001', '2024-03-20'), 
+('S10004', 'A001', '2024-04-25');
+
+
+
+
+
+
+
 1. Retrieve names of students enrolled in any society.
 
 SELECT DISTINCT s.StudentName
